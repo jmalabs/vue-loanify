@@ -6,56 +6,61 @@
             <VCard title="Application Details">
                 <VCardText>
                     <!-- 👉 Form -->
-                    <VForm class="mt-6">
+                    <VForm class="mt-6" @submit.prevent="apply" ref="form">
                         <VRow>
                             <VCol md="6" cols="12">
-                                <VTextField label="Application Date" v-model="applicationDate" type="date" ></VTextField>
+                                <VTextField label="Application Date" v-model="applicationDate" type="date"
+                                    :rules="[fieldValidationRules.required]"></VTextField>
                             </VCol>
                             <VCol md="6" cols="12">
 
                             </VCol>
                             <!-- 👉 First Name -->
                             <VCol md="6" cols="12">
-                                <VTextField label="First Name" v-model="firstName" />
+                                <VTextField label="First Name" v-model="firstName"
+                                    :rules="[fieldValidationRules.required]" />
                             </VCol>
 
                             <!-- 👉 Last Name -->
                             <VCol md="6" cols="12">
-                                <VTextField label="Last Name" v-model="lastName" />
+                                <VTextField label="Last Name" v-model="lastName" :rules="[fieldValidationRules.required]" />
                             </VCol>
 
                             <!-- 👉 Email -->
                             <VCol cols="12" md="6">
-                                <VTextField label="E-mail" type="email" v-model="email" />
+                                <VTextField label="E-mail" type="email" v-model="email"
+                                    :rules="[fieldValidationRules.required]" />
                             </VCol>
 
                             <VCol cols="12" md="6">
-                                <VTextField label="Contact No." type="text" v-model="contactNo" />
+                                <VTextField label="Contact No." type="text" v-model="contactNo"
+                                    :rules="[fieldValidationRules.required]" />
                             </VCol>
 
                             <VCol cols="12" md="12">
-                                <VTextField label="Complete Address" type="text" v-model="completeAddress" />
+                                <VTextField label="Complete Address" type="text" v-model="completeAddress"
+                                    :rules="[fieldValidationRules.required]" />
                             </VCol>
                             <VDivider />
 
                             <VCol md="3" cols="3">
                                 <VTextField label="Amount" type="number" min="1" max="100000" suffix="PHP"
-                                    v-model.number="principal" />
+                                    v-model.number="principal" :rules="[fieldValidationRules.required]" />
                             </VCol>
                             <VCol md="3" cols="3">
                                 <VTextField label="Monthly Interest" type="number" suffix="%" min="2" max="20"
-                                    v-model.number="rate" />
+                                    v-model.number="rate" :rules="[fieldValidationRules.required]" />
                             </VCol>
                             <!-- 👉 Monthly Interest -->
                             <VCol md="3" cols="3">
                                 <VTextField label="Terms" type="number" min="1" max="12" suffix="months"
-                                    v-model.number="terms" />
+                                    v-model.number="terms" :rules="[fieldValidationRules.required]" />
                             </VCol>
 
                             <VDivider />
                             <!-- 👉 Form Actions -->
                             <VCol cols="12" class="d-flex flex-wrap gap-4">
-                                <VBtn @click="apply">Save changes</VBtn>
+                                <VBtn type="submit">Save changes</VBtn>
 
                                 <VBtn color="secondary" variant="tonal" type="reset">
                                     Reset
@@ -74,6 +79,7 @@
 import ProgressSpinner from '@core/components/ProgressSpinner.vue';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
+
 import loanifyApi from '../../../services/loanify/loanifyApi.vue';
 import LoanStatus from '../../../utils/status';
 export default {
@@ -93,6 +99,8 @@ export default {
         const terms = ref(0)
         const rate = ref(0)
         const isLoading = ref(false);
+
+        const form = ref(null)
         const rateInPercentage = computed(() => {
             return rate.value / 100
         });
@@ -101,7 +109,29 @@ export default {
             return terms.value * 2;
         });
 
+        const fieldValidationRules = {
+            required: value => !!value || 'Field is required',
+        }
+
+        async function validateForm() {
+            const { valid } = await form.value.validate()
+
+
+            if (!valid) {
+                return false;
+            }
+
+            return true;
+        }
         async function apply() {
+
+            if (!await validateForm()) {
+                console.log('Form is not valid!');
+                return;
+            }
+
+            console.log('firstName >>', firstName)
+
             const totalInterest = calculateInterest(principal.value, rateInPercentage.value, terms.value);
             const totalAmount = principal.value + totalInterest;
             const applicationData = {
@@ -124,9 +154,6 @@ export default {
                 isLoading.value = true;
                 await loanifyApi.createApplication(applicationData)
                 router.replace({ path: '/debtors' })
-                red
-
-
             } catch (error) {
                 console.log('error', error)
             } finally {
@@ -176,18 +203,10 @@ export default {
             terms,
             rate,
             isLoading,
+            fieldValidationRules,
+            form,
             apply
         }
     }
 }
 </script>
-<!-- <style scoped>
-.center-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    /* Ensure content fills the height */
-}
-</style> -->

@@ -46,8 +46,10 @@
                     </td>
                 </tr>
             </tbody>
+            
         </VTable>
     </VCard>
+    <VCard  v-if="!applications?.length" style="text-align: center;">No Data</VCard>
 </template>
 
 
