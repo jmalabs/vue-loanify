@@ -12,7 +12,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import AccountSettings from '../src/pages/account-settings.vue'
 import Application from '../src/pages/applications.vue'
 import Debtors from '../src/pages/debtors.vue'
-import Dashboard from '../src/pages/index.vue'
 
 
 loadFonts()
@@ -24,7 +23,7 @@ const routes = [
   {
     name: 'index',
     path: '/',
-    component: Dashboard,
+    redirect: {name : 'applications'}
   },
   {
     name: 'account-settings',
