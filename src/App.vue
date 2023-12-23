@@ -1,26 +1,27 @@
+<script setup>
+import BuyNow from '@core/components/BuyNow.vue'
+</script>
+
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <VApp>
+    <VLayout class="layout-wrapper layout-nav-type-vertical">
+      <DefaultLayoutWithVerticalNav />
+      <RouterView />
+      <!-- <BuyNow /> -->
+    </VLayout>
+  </VApp>
 </template>
 
+
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import DefaultLayoutWithVerticalNav from '../src/layouts/components/DefaultLayoutWithVerticalNav.vue'
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+
+  components: [DefaultLayoutWithVerticalNav],
+  setup() {
+
+
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
