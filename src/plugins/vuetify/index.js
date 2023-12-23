@@ -9,5 +9,5 @@ import 'vuetify/styles'
 export default createVuetify({
   defaults,
   icons,
-  theme,
+  theme
 })

@@ -10,6 +10,8 @@ declare module 'vue' {
     BuyNow: typeof import('./src/@core/components/BuyNow.vue')['default']
     CardStatisticsVertical: typeof import('./src/@core/components/CardStatisticsVertical.vue')['default']
     ErrorHeader: typeof import('./src/@core/components/ErrorHeader.vue')['default']
+    ProgressCircular: typeof import('./src/@core/components/ProgressCircular.vue')['default']
+    ProgressSpinner: typeof import('./src/@core/components/ProgressSpinner.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ThemeSwitcher: typeof import('./src/@core/components/ThemeSwitcher.vue')['default']

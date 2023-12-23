@@ -18,7 +18,7 @@ import DefaultLayoutWithVerticalNav from '../src/layouts/components/DefaultLayou
 
 export default {
 
-  components: [DefaultLayoutWithVerticalNav],
+  components: { DefaultLayoutWithVerticalNav },
   setup() {
 
 
