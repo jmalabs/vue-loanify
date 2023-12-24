@@ -43,16 +43,16 @@
                             </VCol>
                             <VDivider />
 
-                            <VCol md="3" cols="3">
+                            <VCol xs="12" md="3" cols="auto">
                                 <VTextField label="Amount" type="number" min="1" max="100000" suffix="PHP"
                                     v-model.number="principal" :rules="[fieldValidationRules.required]" />
                             </VCol>
-                            <VCol md="3" cols="3">
+                            <VCol xs="12" md="3" cols="auto">
                                 <VTextField label="Monthly Interest" type="number" suffix="%" min="2" max="20"
                                     v-model.number="rate" :rules="[fieldValidationRules.required]" />
                             </VCol>
                             <!-- 👉 Monthly Interest -->
-                            <VCol md="3" cols="3">
+                            <VCol xs="12" md="3" cols="auto" >
                                 <VTextField label="Terms" type="number" min="1" max="12" suffix="months"
                                     v-model.number="terms" :rules="[fieldValidationRules.required]" />
                             </VCol>

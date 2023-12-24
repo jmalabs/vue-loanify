@@ -1,6 +1,6 @@
 <script setup>
 import { useTheme } from 'vuetify'
-import logo from '@/assets/logo.svg?raw'
+import logo from '@/assets/loanify.svg?raw'
 import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
 import authV1MaskDark from '@/assets/images/pages/auth-v1-mask-dark.png'
 import authV1MaskLight from '@/assets/images/pages/auth-v1-mask-light.png'

@@ -12,6 +12,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import AccountSettings from '../src/pages/account-settings.vue'
 import Application from '../src/pages/applications.vue'
 import Debtors from '../src/pages/debtors.vue'
+import Home from '../src/pages/index.vue'
 
 
 loadFonts()
@@ -20,10 +21,16 @@ app.use(vuetify)
 app.use(createPinia())
 
 const routes = [
+  
   {
     name: 'index',
     path: '/',
     redirect: {name : 'applications'}
+  },
+  {
+    name: 'home',
+    path: '/home',
+    component: Home
   },
   {
     name: 'account-settings',
@@ -39,12 +46,7 @@ const routes = [
     name: 'applications',
     path: '/applications',
     component: Application,
-  },
-  {
-    name: 'error',
-    path: '/error',
-    component: Application,
-  },
+  }
 ]
 
 const router = createRouter({
