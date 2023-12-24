@@ -30,9 +30,12 @@
                         month: '2-digit',
                         day: '2-digit'
                     })" />
-                    <td v-text="row.principal" />
+                    <td v-text="row.principal?.toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'PHP'
+                    })" />
                     <td v-text="row.terms" />
-                    <td v-text="row.rate" />
+                    <td v-text="row.rate?.toFixed(2) + '%'" />
                     <!-- <td v-text="row.status" /> -->
                     <!-- status -->
                     <td>
@@ -46,10 +49,10 @@
                     </td>
                 </tr>
             </tbody>
-            
+
         </VTable>
     </VCard>
-    <VCard  v-if="!applications?.length" style="text-align: center;">No Data</VCard>
+    <VCard v-if="!applications?.length" style="text-align: center;">No Data</VCard>
 </template>
 
 
