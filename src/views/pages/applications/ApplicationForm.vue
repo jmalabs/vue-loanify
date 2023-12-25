@@ -60,7 +60,7 @@
                             <VDivider />
                             <!-- 👉 Form Actions -->
                             <VCol cols="12" class="d-flex flex-wrap gap-4">
-                                <VBtn type="submit">Save changes</VBtn>
+                                <VBtn type="submit">Submit</VBtn>
 
                                 <VBtn color="secondary" variant="tonal" type="reset">
                                     Reset
