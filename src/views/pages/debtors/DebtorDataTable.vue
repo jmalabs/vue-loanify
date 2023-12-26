@@ -1,7 +1,7 @@
 
 
 <template>
-    <VCard>
+    <VCard title="Debtors">
         <VTable :headers="headers" :items="applications" item-key="fullName" class="table-rounded" hide-default-footer
             disable-sort>
             <thead>
