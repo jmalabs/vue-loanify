@@ -111,7 +111,7 @@ export default {
             'CONTACT #',
             'APPLICATION DATE',
             'AMOUNT',
-            'TERMS',
+            'TERMS (MONTHS)',
             'RATE',
             'STATUS',
         ]
