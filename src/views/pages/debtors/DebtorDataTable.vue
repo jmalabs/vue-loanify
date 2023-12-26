@@ -121,6 +121,7 @@ export default {
             'TERMS (MONTHS)',
             'RATE',
             'STATUS',
+            'ACTIONS'
         ]
         const usreList = applications
 
