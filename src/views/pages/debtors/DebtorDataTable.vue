@@ -52,7 +52,7 @@
                             {{ status[row.status] }}
                         </VChip> -->
                         <VBtn type="submit">Approve</VBtn>
-                      <VBtn color="secondary" variant="tonal" type="reset">
+                      <VBtn color="error" variant="tonal" type="reset">
                                     Reject
                                 </VBtn>
 
