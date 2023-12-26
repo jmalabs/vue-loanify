@@ -47,13 +47,6 @@
                         </VChip>
 
                     </td>
-                    <td>
-                      <VBtn type="submit">Approve</VBtn>
-
-                                <VBtn color="secondary" variant="tonal" type="reset">
-                                    Reject
-                                </VBtn
-                    </td>
                 </tr>
             </tbody>
 
@@ -121,7 +114,6 @@ export default {
             'TERMS (MONTHS)',
             'RATE',
             'STATUS',
-            'ACTIONS'
         ]
         const usreList = applications
 
