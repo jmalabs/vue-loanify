@@ -51,9 +51,7 @@
                         <!-- <VChip small :color="statusColor[status[row?.status ?? ]]" class="font-weight-medium">
                             {{ status[row.status] }}
                         </VChip> -->
-                        <VChip small class="font-weight-medium">
-                            {{ row.status }}
-                        </VChip>
+                        <VBtn type="submit">Submit</VBtn>
 
                     </td>
                 </tr>
