@@ -51,10 +51,17 @@
                         <!-- <VChip small :color="statusColor[status[row?.status ?? ]]" class="font-weight-medium">
                             {{ status[row.status] }}
                         </VChip> -->
+                      <VRow>
+                        <VCol cols="6">
                         <VBtn type="submit">Approve</VBtn>
+                        </VCol>
+                        <VCol cols="6">
                       <VBtn color="error" variant="tonal" type="reset">
                                     Reject
                                 </VBtn>
+                          </VCol>
+                        </VRow>
+                        
 
                     </td>
                 </tr>
