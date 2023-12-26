@@ -47,6 +47,15 @@
                         </VChip>
 
                     </td>
+                    <td>
+                        <!-- <VChip small :color="statusColor[status[row?.status ?? ]]" class="font-weight-medium">
+                            {{ status[row.status] }}
+                        </VChip> -->
+                        <VChip small class="font-weight-medium">
+                            {{ row.status }}
+                        </VChip>
+
+                    </td>
                 </tr>
             </tbody>
 
@@ -114,6 +123,7 @@ export default {
             'TERMS (MONTHS)',
             'RATE',
             'STATUS',
+            'ACTIONS'
         ]
         const usreList = applications
 
