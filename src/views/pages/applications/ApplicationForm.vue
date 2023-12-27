@@ -41,9 +41,6 @@
                                 <VTextField label="Complete Address" type="text" v-model="completeAddress"
                                     :rules="[fieldValidationRules.required]" />
                             </VCol>
-                            // <VDivider />
-
-
                         </VRow>
 
                         <VRow>
