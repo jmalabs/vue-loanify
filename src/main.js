@@ -25,7 +25,7 @@ const routes = [
   {
     name: 'index',
     path: '/',
-    redirect: {name : 'applications'}
+    redirect: {name : 'debtors'}
   },
   {
     name: 'home',
