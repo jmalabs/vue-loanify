@@ -13,9 +13,8 @@
                                     <VTextField label="Application Date" type="date" v-model="debtorData.applicationDate">
                                     </VTextField>
                                 </VCol>
-                                <VCol md="6" cols="12">
-
-                                </VCol>
+                            </VRow>
+                            <VRow>
                                 <!-- 👉 First Name -->
                                 <VCol md="6" cols="12">
                                     <VTextField label="First Name" v-model="debtorData.firstName" />

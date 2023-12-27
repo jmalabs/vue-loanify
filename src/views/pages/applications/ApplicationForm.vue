@@ -12,9 +12,9 @@
                                 <VTextField label="Application Date" v-model="applicationDate" type="date"
                                     :rules="[fieldValidationRules.required]"></VTextField>
                             </VCol>
-                            <VCol md="6" cols="12">
+                        </VRow>
+                        <VRow>
 
-                            </VCol>
                             <!-- 👉 First Name -->
                             <VCol md="6" cols="12">
                                 <VTextField label="First Name" v-model="firstName"
