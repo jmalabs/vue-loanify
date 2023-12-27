@@ -41,34 +41,40 @@
                                 <VTextField label="Complete Address" type="text" v-model="completeAddress"
                                     :rules="[fieldValidationRules.required]" />
                             </VCol>
-                            <VDivider />
+                            // <VDivider />
 
-                            <VCol xs="12" md="3" cols="auto">
-                                <VTextField label="Amount" type="number" min="1" max="100000" suffix="PHP"
-                                    v-model.number="principal" :rules="[fieldValidationRules.required]" />
-                            </VCol>
-                            <VCol xs="12" md="3" cols="auto">
-                                <VTextField label="Monthly Interest" type="number" suffix="%" min="2" max="20"
-                                    v-model.number="rate" :rules="[fieldValidationRules.required]" />
-                            </VCol>
-                            <!-- 👉 Monthly Interest -->
-                            <VCol xs="12" md="3" cols="auto" >
-                                <VTextField label="Terms" type="number" min="1" max="12" suffix="months"
-                                    v-model.number="terms" :rules="[fieldValidationRules.required]" />
-                            </VCol>
 
-                            <VDivider />
-                            <!-- 👉 Form Actions -->
-                            <VCol cols="12" class="d-flex flex-wrap gap-4">
-                              <div>
-                                <VBtn type="submit">Submit</VBtn>
+                        </VRow>
 
-                                <VBtn color="secondary" variant="tonal" type="reset">
-                                    Reset
-                                </VBtn>
-                              </div>
+                        <VRow>
+                            <VCol>
+                                <VCol xs="12" md="4" cols="auto">
+                                    <VTextField label="Amount" type="number" min="1" max="100000" suffix="PHP"
+                                        v-model.number="principal" :rules="[fieldValidationRules.required]" />
+                                </VCol>
+                                <VCol xs="12" md="4" cols="auto">
+                                    <VTextField label="Monthly Interest" type="number" suffix="%" min="2" max="20"
+                                        v-model.number="rate" :rules="[fieldValidationRules.required]" />
+                                </VCol>
+                                <!-- 👉 Monthly Interest -->
+                                <VCol xs="12" md="4" cols="auto">
+                                    <VTextField label="Terms" type="number" min="1" max="12" suffix="months"
+                                        v-model.number="terms" :rules="[fieldValidationRules.required]" />
+                                </VCol>
+                                <TermDetails :totalAmount="totalAmount" :applicationDate="new Date(applicationDate)"
+                                    :numberOfPayments="numberOfPayments" :terms="terms" @term-details="setTermDetails" />
                             </VCol>
+                        </VRow>
+                        <VRow>
+                            <VCol cols="12" class="d-flex flex-wrap">
+                                <div>
+                                    <VBtn type="submit">Submit</VBtn>
 
+                                    <VBtn color="secondary" variant="tonal" type="reset">
+                                        Reset
+                                    </VBtn>
+                                </div>
+                            </VCol>
                         </VRow>
                     </VForm>
                 </VCardText>
@@ -84,8 +90,9 @@ import { useRouter } from 'vue-router';
 
 import loanifyApi from '../../../services/loanify/loanifyApi.vue';
 import LoanStatus from '../../../utils/status';
+import TermDetails from '../applications/TermsDetails.vue'
 export default {
-    components: { ProgressSpinner },
+    components: { ProgressSpinner, TermDetails },
     setup() {
 
         const router = useRouter();
@@ -101,15 +108,23 @@ export default {
         const terms = ref(0)
         const rate = ref(0)
         const isLoading = ref(false);
+        let termData = []
 
         const form = ref(null)
         const rateInPercentage = computed(() => {
+            console.log('rateInPercentage')
             return rate.value / 100
         });
 
         const numberOfPayments = computed(() => {
             return terms.value * 2;
         });
+
+        const totalAmount = computed(() => {
+            const interest = calculateInterest(principal.value, rateInPercentage.value, terms.value);
+
+            return principal.value + interest;
+        })
 
         const fieldValidationRules = {
             required: value => !!value || 'Field is required',
@@ -148,7 +163,7 @@ export default {
                 principal: +principal.value,
                 rateInPercentage: rateInPercentage.value,
                 totalAmount,
-                termDetails: getTermDetails(totalAmount, applicationDate.value),
+                termDetails: termData,
                 loanStatus: LoanStatus.LOAN_STATUS.Pending
             }
 
@@ -164,6 +179,10 @@ export default {
             }
 
 
+        }
+
+        function setTermDetails(termDetails){
+            termData = [...termDetails]
         }
         function getTermDetails(totalAmount, applicationDate) {
             const termDetails = [];
@@ -207,7 +226,10 @@ export default {
             isLoading,
             fieldValidationRules,
             form,
-            apply
+            totalAmount,
+            numberOfPayments,
+            apply,
+            setTermDetails
         }
     }
 }
