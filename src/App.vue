@@ -6,7 +6,6 @@ import BuyNow from '@core/components/BuyNow.vue'
   <VApp>
     <VLayout class="layout-wrapper layout-nav-type-vertical">
       <DefaultLayoutWithVerticalNav />
-      <RouterView />
       <!-- <BuyNow /> -->
     </VLayout>
   </VApp>

@@ -44,20 +44,20 @@
                         </VRow>
 
                         <VRow>
+                            <VCol xs="12" md="4" cols="auto">
+                                <VTextField label="Amount" type="number" min="1" max="100000" suffix="PHP"
+                                    v-model.number="principal" :rules="[fieldValidationRules.required]" />
+                            </VCol>
+                            <VCol xs="12" md="4" cols="auto">
+                                <VTextField label="Monthly Interest" type="number" suffix="%" min="2" max="20"
+                                    v-model.number="rate" :rules="[fieldValidationRules.required]" />
+                            </VCol>
+                            <!-- 👉 Monthly Interest -->
+                            <VCol xs="12" md="4" cols="auto">
+                                <VTextField label="Terms" type="number" min="1" max="12" suffix="months"
+                                    v-model.number="terms" :rules="[fieldValidationRules.required]" />
+                            </VCol>
                             <VCol>
-                                <VCol xs="12" md="4" cols="auto">
-                                    <VTextField label="Amount" type="number" min="1" max="100000" suffix="PHP"
-                                        v-model.number="principal" :rules="[fieldValidationRules.required]" />
-                                </VCol>
-                                <VCol xs="12" md="4" cols="auto">
-                                    <VTextField label="Monthly Interest" type="number" suffix="%" min="2" max="20"
-                                        v-model.number="rate" :rules="[fieldValidationRules.required]" />
-                                </VCol>
-                                <!-- 👉 Monthly Interest -->
-                                <VCol xs="12" md="4" cols="auto">
-                                    <VTextField label="Terms" type="number" min="1" max="12" suffix="months"
-                                        v-model.number="terms" :rules="[fieldValidationRules.required]" />
-                                </VCol>
                                 <TermDetails :totalAmount="totalAmount" :applicationDate="new Date(applicationDate)"
                                     :numberOfPayments="numberOfPayments" :terms="terms" @term-details="setTermDetails" />
                             </VCol>
@@ -92,6 +92,7 @@ export default {
     components: { ProgressSpinner, TermDetails },
     setup() {
 
+
         const router = useRouter();
 
 
@@ -109,7 +110,6 @@ export default {
 
         const form = ref(null)
         const rateInPercentage = computed(() => {
-            console.log('rateInPercentage')
             return rate.value / 100
         });
 
@@ -140,11 +140,9 @@ export default {
         async function apply() {
 
             if (!await validateForm()) {
-                console.log('Form is not valid!');
                 return;
             }
 
-            console.log('firstName >>', firstName)
 
             const totalInterest = calculateInterest(principal.value, rateInPercentage.value, terms.value);
             const totalAmount = principal.value + totalInterest;
@@ -169,7 +167,6 @@ export default {
                 await loanifyApi.createApplication(applicationData)
                 router.replace({ path: '/debtors' })
             } catch (error) {
-                console.log('error', error)
             } finally {
 
                 isLoading.value = false;
@@ -178,24 +175,8 @@ export default {
 
         }
 
-        function setTermDetails(termDetails){
+        function setTermDetails(termDetails) {
             termData = [...termDetails]
-        }
-        function getTermDetails(totalAmount, applicationDate) {
-            const termDetails = [];
-            let paymentDate = new Date(applicationDate)
-
-            for (let i = 0; i < numberOfPayments.value; i++) {
-                paymentDate.setDate(paymentDate.getDate() + 15);
-                termDetails.push({
-                    termNo: i + 1,
-                    paymentDate: new Date(paymentDate),
-                    amount: totalAmount / (numberOfPayments.value > 0 ? numberOfPayments.value : 1)
-
-                })
-            }
-
-            return termDetails;
         }
 
         function calculateInterest(principal, rate, terms) {

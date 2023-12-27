@@ -1,5 +1,5 @@
 <template>
-    <DebtorDataTable></DebtorDataTable>
+    <DebtorDataTable />
 </template>
 
 
