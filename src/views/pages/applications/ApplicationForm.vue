@@ -65,7 +65,7 @@
                         <VRow>
                             <VCol cols="12" class="d-flex flex-wrap">
                                 
-                                    <VBtn type="submit">Submit</VBtn>
+                                    <VBtn type="submit">Apply</VBtn>
 
                                     <VBtn color="secondary" variant="tonal" type="reset">
                                         Reset
