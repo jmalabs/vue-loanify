@@ -14,10 +14,9 @@
             </thead>
 
             <tbody>
-
-
                 <DebtorRowDataVue v-for="row in applications" :key="row.key" :debtor="row"
                     @active-debtor="setActiveDebtorId" />
+
             </tbody>
 
         </VTable>

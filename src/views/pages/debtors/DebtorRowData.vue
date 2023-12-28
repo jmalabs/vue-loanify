@@ -1,8 +1,5 @@
 <template>
-    <!-- <DebtorDetailsVue :isOpen="openDebtorDetails" :debtorId="debtorData.id" /> -->
     <tr>
-        <!-- name -->
-
         <td>
             <div class="d-flex flex-column">
                 <a href="javascript:void(0)" class="d-block font-weight-semibold text--primary text-truncate"

@@ -76,7 +76,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue-darken-1" variant="text" @click="closeModal">
+                    <v-btn color="error" variant="tonal" @click="closeModal">
                         Close
                     </v-btn>
                 </v-card-actions>
