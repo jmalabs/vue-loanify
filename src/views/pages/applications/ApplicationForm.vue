@@ -64,13 +64,13 @@
                         </VRow>
                         <VRow>
                             <VCol cols="12" class="d-flex flex-wrap">
-                                <div>
+                                
                                     <VBtn type="submit">Submit</VBtn>
 
                                     <VBtn color="secondary" variant="tonal" type="reset">
                                         Reset
                                     </VBtn>
-                                </div>
+                                
                             </VCol>
                         </VRow>
                     </VForm>
