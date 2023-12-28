@@ -7,7 +7,7 @@
                 </v-card-title>
                 <v-card-text>
                     <v-container>
-                        <VForm class="mt-6" ref="form">
+                        <VForm class="mt-6" ref="form" :disabled="false">
                             <VRow>
                                 <VCol md="6" cols="12">
                                     <VTextField label="Application Date" type="date" v-model="debtorData.applicationDate">
@@ -53,8 +53,11 @@
                                     <VTextField label="Terms" type="number" min="1" max="12" suffix="months"
                                         v-model="debtorData.terms" />
                                 </VCol>
-
-                                <VCol>
+                                <VCol cols="12">
+                                    <p class="text-subtitle-1 font-weight-medium">Total Interest: {{ debtorData.totalInterest?.toFixed(2) ?? 0.00.toFixed(2) }}</p>
+                                    <p class="text-subtitle-1 font-weight-medium">Total Amount: {{ debtorData.totalAmount?.toFixed(2) }}</p>
+                                </VCol>
+                                <VCol cols="12">
                                     <TermDetailsDataTable :termDetails="debtorData.termDetails"></TermDetailsDataTable>
                                 </VCol>
 
@@ -113,6 +116,8 @@ export default {
             debtor.terms = newValue.terms
             debtor.rate = newValue.rate
             debtor.principal = newValue.principal
+            debtor.totalAmount = newValue.totalAmount
+            debtor.totalInterest = newValue.totalInterest
             debtor.termDetails = newValue.termDetails
 
 

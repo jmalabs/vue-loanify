@@ -53,6 +53,8 @@ export default {
                         email: data[key]?.email,
                         contactNo: data[key]?.contactNo,
                         principal: data[key]?.principal,
+                        totalInterest: data[key]?.totalInterest,
+                        totalAmount:  data[key]?.totalAmount,
                         terms: data[key]?.terms,
                         rate: data[key]?.rate,
                         status: data[key]?.loanStatus,

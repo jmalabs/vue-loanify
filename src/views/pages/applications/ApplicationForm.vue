@@ -57,7 +57,11 @@
                                 <VTextField label="Terms" type="number" min="1" max="12" suffix="months"
                                     v-model.number="terms" :rules="[fieldValidationRules.required]" />
                             </VCol>
-                            <VCol>
+                            <VCol cols="12">
+                                <p class="text-subtitle-1 font-weight-medium">Total Interest: {{ totalInterest }}</p>
+                                <p class="text-subtitle-1 font-weight-medium">Total Amount: {{ totalAmount }}</p>
+                            </VCol>
+                            <VCol cols="12">
                                 <TermDetails :totalAmount="totalAmount" :applicationDate="new Date(applicationDate)"
                                     :numberOfPayments="numberOfPayments" :terms="terms" @term-details="setTermDetails" />
                             </VCol>
@@ -116,9 +120,13 @@ export default {
 
         const totalAmount = computed(() => {
             const interest = calculateInterest(principal.value, rateInPercentage.value, terms.value);
-
-            return principal.value + interest;
+            const total = principal.value + interest
+            return Number(total ?? 0).toFixed(2);
         })
+
+        const totalInterest = computed(() => {
+            return calculateInterest(principal.value, rateInPercentage.value, terms.value)?.toFixed(2) ?? 0.00
+        });
 
         const fieldValidationRules = {
             required: value => !!value || 'Field is required',
@@ -136,13 +144,15 @@ export default {
         }
         async function apply() {
 
+            console.log('APPLY')
             if (!await validateForm()) {
                 return;
             }
 
+            console.log('PASS VALIDATION')
 
-            const totalInterest = calculateInterest(principal.value, rateInPercentage.value, terms.value);
-            const totalAmount = principal.value + totalInterest;
+
+            // const totalAmount = principal.value + totalInterest;
             const applicationData = {
                 applicationDate: applicationDate.value,
                 firstName: firstName.value,
@@ -154,7 +164,8 @@ export default {
                 rate: rate.value,
                 principal: +principal.value,
                 rateInPercentage: rateInPercentage.value,
-                totalAmount,
+                totalAmount: Number(totalAmount.value),
+                totalInterest: Number(totalInterest.value),
                 termDetails: termData,
                 loanStatus: LoanStatus.LOAN_STATUS.Pending
             }
@@ -164,6 +175,7 @@ export default {
                 await loanifyApi.createApplication(applicationData)
                 router.replace({ path: '/debtors' })
             } catch (error) {
+                console.log('error', error)
             } finally {
 
                 isLoading.value = false;
@@ -202,6 +214,7 @@ export default {
             fieldValidationRules,
             form,
             totalAmount,
+            totalInterest,
             numberOfPayments,
             apply,
             setTermDetails
