@@ -140,7 +140,7 @@ export default {
       const account = await getAccount() // Ensure the function exists and is properly called
       console.log('account', account)    // Log the account to verify it's fetched
 
-      profileName.value = account.name
+      profileName.value = account?.name
       console.log('profileName 2', profileName.value)
     })
 

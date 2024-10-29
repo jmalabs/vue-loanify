@@ -16,55 +16,61 @@ import Debtors from '../src/pages/debtors.vue'
 import Home from '../src/pages/index.vue'
 import authRoutes from './router/routes/authRoute'
 import { initializeMsal, isAuthenticated, login, msalInstance } from './services/loanify/authService'
-await initializeMsal()
 
-// await msalInstance.handleRedirectPromise()
+async function bootstrap() {
+  await initializeMsal()
 
-const isValid = await isAuthenticated()
-if (!isValid) {
-  await login()
+  // await msalInstance.handleRedirectPromise()
+
+  const isValid = await isAuthenticated()
+  if (!isValid) {
+    await login()
+  }
+
+  await msalInstance.handleRedirectPromise()
+
+  loadFonts()
+  const app = createApp(App)
+  app.use(vuetify)
+  app.use(createPinia())
+
+  const routes = [
+    {
+      name: 'index',
+      path: '/',
+      redirect: { name: 'debtors' },
+    },
+    {
+      name: 'home',
+      path: '/home',
+      component: Home,
+    },
+    {
+      name: 'account-settings',
+      path: '/account-settings',
+      component: AccountSettings,
+    },
+    {
+      name: 'debtors',
+      path: '/debtors',
+      component: Debtors,
+    },
+    {
+      name: 'applications',
+      path: '/applications',
+      component: Application,
+    },
+    ...authRoutes,
+  ]
+
+  const router = createRouter({
+    // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
+    history: createWebHistory(),
+    routes, // short for `routes: routes`
+  })
+
+  app.use(router)
+  app.mount('#app')
 }
 
-await msalInstance.handleRedirectPromise()
-loadFonts()
-const app = createApp(App)
-app.use(vuetify)
-app.use(createPinia())
-
-const routes = [
-  {
-    name: 'index',
-    path: '/',
-    redirect: { name: 'debtors' },
-  },
-  {
-    name: 'home',
-    path: '/home',
-    component: Home,
-  },
-  {
-    name: 'account-settings',
-    path: '/account-settings',
-    component: AccountSettings,
-  },
-  {
-    name: 'debtors',
-    path: '/debtors',
-    component: Debtors,
-  },
-  {
-    name: 'applications',
-    path: '/applications',
-    component: Application,
-  },
-  ...authRoutes,
-]
-
-const router = createRouter({
-  // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
-  history: createWebHistory(),
-  routes, // short for `routes: routes`
-})
-
-app.use(router)
-app.mount('#app')
+bootstrap()

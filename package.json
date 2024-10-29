@@ -75,5 +75,12 @@
         "postcss": "8",
         "stylelint-order": "5",
         "postcss-sorting": "^7.0.1"
-    }
+    },
+    "browserslist": [
+  "last 2 versions",
+  "Chrome >= 91",
+  "Edge >= 91",
+  "Firefox >= 89",
+  "Safari >= 15"
+]
 }
