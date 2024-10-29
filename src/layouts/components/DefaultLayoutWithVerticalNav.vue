@@ -1,11 +1,30 @@
 <script setup>
-import DrawerContent from './DrawerContent.vue'
 import { VerticalNavLayout } from '@layouts'
+import DrawerContent from './DrawerContent.vue'
 
 // Components
 import Footer from '@/layouts/components/Footer.vue'
 import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
 import UserProfile from '@/layouts/components/UserProfile.vue'
+
+import { onMounted } from 'vue'; // Import onMounted
+import { useRoute } from 'vue-router'; // Import useRoute
+
+const route = useRoute()
+const hideNav = ref(false)
+onMounted(() => {
+
+  console.log('TEST')
+
+  if (route.meta && route.meta.hideNav) {
+    hideNav.value = true // Show navigation if meta shows it
+  } else {
+    hideNav.value = false // Hide navigation otherwise
+  }
+
+  console.log('hideNav', route, JSON.stringify(route))
+
+})
 </script>
 
 <template>

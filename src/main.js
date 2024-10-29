@@ -3,6 +3,7 @@ import '@/@iconify/icons-bundle'
 import App from '@/App.vue'
 import vuetify from '@/plugins/vuetify'
 import { loadFonts } from '@/plugins/webfontloader'
+
 // import router from '@/router'
 import '@/styles/styles.scss'
 import '@core/scss/index.scss'
@@ -13,24 +14,33 @@ import AccountSettings from '../src/pages/account-settings.vue'
 import Application from '../src/pages/applications.vue'
 import Debtors from '../src/pages/debtors.vue'
 import Home from '../src/pages/index.vue'
+import authRoutes from './router/routes/authRoute'
+import { initializeMsal, isAuthenticated, login, msalInstance } from './services/loanify/authService'
+await initializeMsal()
 
+// await msalInstance.handleRedirectPromise()
 
+const isValid = await isAuthenticated()
+if (!isValid) {
+  await login()
+}
+
+await msalInstance.handleRedirectPromise()
 loadFonts()
 const app = createApp(App)
 app.use(vuetify)
 app.use(createPinia())
 
 const routes = [
-  
   {
     name: 'index',
     path: '/',
-    redirect: {name : 'debtors'}
+    redirect: { name: 'debtors' },
   },
   {
     name: 'home',
     path: '/home',
-    component: Home
+    component: Home,
   },
   {
     name: 'account-settings',
@@ -46,7 +56,8 @@ const routes = [
     name: 'applications',
     path: '/applications',
     component: Application,
-  }
+  },
+  ...authRoutes,
 ]
 
 const router = createRouter({
@@ -54,7 +65,6 @@ const router = createRouter({
   history: createWebHistory(),
   routes, // short for `routes: routes`
 })
-
 
 app.use(router)
 app.mount('#app')

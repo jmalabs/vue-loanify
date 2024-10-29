@@ -1,16 +1,3 @@
-<script setup>
-import avatar1 from '@/assets/images/avatars/avatar-1.png'
-
-const avatarBadgeProps = {
-  dot: true,
-  location: 'bottom right',
-  offsetX: 3,
-  offsetY: 3,
-  color: 'success',
-  bordered: true,
-}
-</script>
-
 <template>
   <VBadge v-bind="avatarBadgeProps">
     <VAvatar
@@ -45,72 +32,80 @@ const avatarBadgeProps = {
             </template>
 
             <VListItemTitle class="font-weight-semibold">
-              John Doe
+              {{ profileName }}
             </VListItemTitle>
             <VListItemSubtitle class="text-disabled">
               Admin
             </VListItemSubtitle>
           </VListItem>
 
-          <VDivider class="my-2" />
+          <!-- <VDivider class="my-2" /> -->
 
           <!-- 👉 Profile -->
-          <VListItem link>
+          <!--
+            <VListItem link>
             <template #prepend>
-              <VIcon
-                class="me-2"
-                icon="mdi-account-outline"
-                size="22"
-              />
+            <VIcon
+            class="me-2"
+            icon="mdi-account-outline"
+            size="22"
+            />
             </template>
 
             <VListItemTitle>Profile</VListItemTitle>
-          </VListItem>
+            </VListItem> 
+          -->
 
           <!-- 👉 Settings -->
-          <VListItem link>
+          <!--
+            <VListItem link>
             <template #prepend>
-              <VIcon
-                class="me-2"
-                icon="mdi-cog-outline"
-                size="22"
-              />
+            <VIcon
+            class="me-2"
+            icon="mdi-cog-outline"
+            size="22"
+            />
             </template>
 
             <VListItemTitle>Settings</VListItemTitle>
-          </VListItem>
+            </VListItem> 
+          -->
 
           <!-- 👉 Pricing -->
-          <VListItem link>
+          <!--
+            <VListItem link>
             <template #prepend>
-              <VIcon
-                class="me-2"
-                icon="mdi-currency-usd"
-                size="22"
-              />
+            <VIcon
+            class="me-2"
+            icon="mdi-currency-usd"
+            size="22"
+            />
             </template>
 
             <VListItemTitle>Pricing</VListItemTitle>
-          </VListItem>
+            </VListItem> 
+          -->
 
           <!-- 👉 FAQ -->
-          <VListItem link>
+          <!--
+            <VListItem link>
             <template #prepend>
-              <VIcon
-                class="me-2"
-                icon="mdi-help-circle-outline"
-                size="22"
-              />
+            <VIcon
+            class="me-2"
+            icon="mdi-help-circle-outline"
+            size="22"
+            />
             </template>
 
             <VListItemTitle>FAQ</VListItemTitle>
-          </VListItem>
+            </VListItem> 
+          -->
 
           <!-- Divider -->
           <VDivider class="my-2" />
 
           <!-- 👉 Logout -->
-          <VListItem to="/login">
+          <VListItem link>
             <template #prepend>
               <VIcon
                 class="me-2"
@@ -119,7 +114,9 @@ const avatarBadgeProps = {
               />
             </template>
 
-            <VListItemTitle>Logout</VListItemTitle>
+            <VListItemTitle @click="logout">
+              Logout
+            </VListItemTitle>
           </VListItem>
         </VList>
       </VMenu>
@@ -127,3 +124,42 @@ const avatarBadgeProps = {
     </VAvatar>
   </VBadge>
 </template>
+
+<script>
+import avatar1 from '@/assets/images/avatars/avatar-1.png';
+import { onMounted } from 'vue';
+import { getAccount, logout } from '../../services/loanify/authService';
+
+
+export default {
+  setup() {
+    // Make sure onMounted is called correctly
+
+    let profileName = ref(null)
+    onMounted(async () => {
+      const account = await getAccount() // Ensure the function exists and is properly called
+      console.log('account', account)    // Log the account to verify it's fetched
+
+      profileName.value = account.name
+      console.log('profileName 2', profileName.value)
+    })
+
+    console.log('profileName 1', profileName.value)
+    const avatarBadgeProps = {
+      dot: true,
+      location: 'bottom right',
+      offsetX: 3,
+      offsetY: 3,
+      color: 'success',
+      bordered: true,
+    }
+
+    return {
+      logout,
+      avatarBadgeProps,
+      profileName,
+      avatar1,
+    }
+  },
+}
+</script>
